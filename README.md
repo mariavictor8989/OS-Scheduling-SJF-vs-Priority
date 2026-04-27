@@ -13,4 +13,4 @@ A Java Swing application that simulates and compares two CPU scheduling algorith
 ## How to Run
 1. Clone the repository.
 2. Open the project in NetBeans or any Java IDE.
-3. Run the `SchedulerGUI.java` file.
+3. Run the `SJF_vs_Priority.java` file.
