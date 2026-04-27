@@ -11,24 +11,16 @@ public class SJF_vs_Priority {
 
     /**
      * @param args the command line arguments
-     * 
      */
-   
-
-
     public static void main(String[] args) {
-        try { 
-            // توحيد شكل البرنامج مع نظام التشغيل
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); 
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {}
 
         SwingUtilities.invokeLater(() -> {
-            // بننادي على الكلاس اللي بيجمع الـ Tabs كلها
             SchedulerGUI frame = new SchedulerGUI();
             frame.setVisible(true);
         });
-    
-    }}
-
-
+    }
+}
 
