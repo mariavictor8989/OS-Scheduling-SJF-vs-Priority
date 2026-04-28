@@ -136,6 +136,11 @@ public class UIHelper {
         t.setRowHeight(28);
         t.getTableHeader().setFont(F_BODY);
         t.getTableHeader().setBackground(new Color(240, 242, 248));
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        headerRenderer.setBackground(UIHelper.GREEN);
+        headerRenderer.setForeground(Color.WHITE);
+        t.getTableHeader().setDefaultRenderer(headerRenderer); 
         t.setGridColor(BORDER);
         t.setShowGrid(true);
         t.setSelectionBackground(new Color(220, 235, 255));

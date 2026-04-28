@@ -7,7 +7,7 @@ public class SchedulerGUI extends JFrame {
     private InputPanel  inputPanel;
     private GanttTab    ganttTab;
     private ResultsTab  resultsTab;
-    private AnalysisTab analysisTab;  // ← أضف ده
+    private AnalysisTab analysisTab;  
     private JTabbedPane tabs;
 
     public SchedulerGUI() {
@@ -20,14 +20,14 @@ public class SchedulerGUI extends JFrame {
         inputPanel  = new InputPanel(this::runSimulation);
         ganttTab    = new GanttTab();
         resultsTab  = new ResultsTab();
-        analysisTab = new AnalysisTab();  // ← أضف ده
+        analysisTab = new AnalysisTab(); 
 
         tabs = new JTabbedPane();
         tabs.setFont(UIHelper.F_BODY);
         tabs.addTab("⚙ Input",                inputPanel.build());
         tabs.addTab("📊 Gantt Charts",         ganttTab.build());
         tabs.addTab("📋 Results",              resultsTab.build());
-        tabs.addTab("🔍 Analysis & Conclusion", analysisTab.build());  // ← أضف ده
+        tabs.addTab("🔍 Analysis & Conclusion", analysisTab.build());  
 
         add(buildHeader(), BorderLayout.NORTH);
         add(tabs, BorderLayout.CENTER);
@@ -46,12 +46,12 @@ public class SchedulerGUI extends JFrame {
         try {
             var processes = inputPanel.collectProcesses();
 
-            SimulationResult sjfR = new SJFscheduler(processes).run();  // ← S كبيرة
+            SimulationResult sjfR = new SJFscheduler(processes).run(); 
             SimulationResult priR = new PriorityScheduler(processes, true).run();
 
             ganttTab.update(sjfR.gantt, priR.gantt);
             resultsTab.update(sjfR, priR);
-            analysisTab.update(sjfR, priR, true);  // ← أضف ده
+            analysisTab.update(sjfR, priR, true);  
 
             inputPanel.showError("");
         } catch (Exception ex) {

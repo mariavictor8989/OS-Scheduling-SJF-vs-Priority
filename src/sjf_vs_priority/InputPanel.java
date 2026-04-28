@@ -20,28 +20,8 @@ public class InputPanel {
     public JScrollPane build() {
         JPanel root = UIHelper.vBox();
 
-        // ── Scenario loader ───────────────────────────────────────────────
-        JPanel sc = UIHelper.card("Load a Test Scenario");
-        JPanel scRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 4));
-        scRow.setOpaque(false);
-        String[][] scens = {
-            {"A", "Scenario A — Basic mixed workload"},
-            {"B", "Scenario B — Burst vs Priority conflict"},
-            {"C", "Scenario C — Starvation sensitive"},
-            {"D", "Scenario D — Validation case"}
-        };
-        for (String[] s : scens) {
-            JButton b = UIHelper.outlineBtn(s[1]);
-            final String code = s[0];
-            b.addActionListener(e -> loadScenario(code));
-            scRow.add(b);
-        }
-        sc.add(scRow, BorderLayout.CENTER);
-        root.add(sc);
-        root.add(Box.createVerticalStrut(10));
-
         // ── Process table ─────────────────────────────────────────────────
-        JPanel tc = UIHelper.card("Process Input Table  (PID ≤ 8 chars | Arrival ≥ 0 | Burst > 0 | Priority ≥ 0)");
+        JPanel tc = UIHelper.card("Process Input Table  ");
 
         String[] cols = {"PID", "Arrival Time", "Burst Time", "Priority"};
         inputModel = new DefaultTableModel(cols, 0) {
