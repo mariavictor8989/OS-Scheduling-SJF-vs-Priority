@@ -24,10 +24,10 @@ public class SchedulerGUI extends JFrame {
 
         tabs = new JTabbedPane();
         tabs.setFont(UIHelper.F_BODY);
-        tabs.addTab("⚙ Input",                inputPanel.build());
-        tabs.addTab("📊 Gantt Charts",         ganttTab.build());
-        tabs.addTab("📋 Results",              resultsTab.build());
-        tabs.addTab("🔍 Analysis & Conclusion", analysisTab.build());  
+        tabs.addTab("⚙ Input",                 inputPanel.build());
+        tabs.addTab("📊 Gantt Charts",          ganttTab.build());
+        tabs.addTab("📋 Results",               resultsTab.build());
+        tabs.addTab("🔍 Analysis & Conclusion", analysisTab.build());
 
         add(buildHeader(), BorderLayout.NORTH);
         add(tabs, BorderLayout.CENTER);
@@ -46,12 +46,23 @@ public class SchedulerGUI extends JFrame {
         try {
             var processes = inputPanel.collectProcesses();
 
-            SimulationResult sjfR = new SJFscheduler(processes).run(); 
-            SimulationResult priR = new PriorityScheduler(processes, true).run();
+            // SJF — Preemptive أو Non-Preemptive حسب اختيار المستخدم
+            SimulationResult sjfR = inputPanel.isSJFPreemptive()
+                ? new SJFPreemptiveScheduler(processes).run()
+                : new SJFscheduler(processes).run();  // ← S كبيرة
 
-            ganttTab.update(sjfR.gantt, priR.gantt);
+            // Priority — Preemptive أو Non-Preemptive حسب اختيار المستخدم
+            SimulationResult priR = inputPanel.isPriPreemptive()
+                ? new PriorityPreemptiveScheduler(processes, true).run()
+                : new PriorityScheduler(processes, true).run();
+
+            // ← أضف isSJFPreemptive و isPriPreemptive للـ GanttTab
+            ganttTab.update(sjfR.gantt, priR.gantt,
+                inputPanel.isSJFPreemptive(),
+                inputPanel.isPriPreemptive());
+
             resultsTab.update(sjfR, priR);
-            analysisTab.update(sjfR, priR, true);  
+            analysisTab.update(sjfR, priR, true);
 
             inputPanel.showError("");
         } catch (Exception ex) {

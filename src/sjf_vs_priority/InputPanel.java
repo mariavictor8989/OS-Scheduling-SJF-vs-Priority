@@ -13,6 +13,10 @@ public class InputPanel {
     private JLabel errorLabel;
     private final Runnable onRun;
 
+    // Preemptive checkboxes
+    private JCheckBox sjfPreemptive;
+    private JCheckBox priPreemptive;
+
     public InputPanel(Runnable onRun) {
         this.onRun = onRun;
     }
@@ -20,8 +24,24 @@ public class InputPanel {
     public JScrollPane build() {
         JPanel root = UIHelper.vBox();
 
+        // ── Scheduling Mode ───────────────────────────────────────────────
+        JPanel modeCard = UIHelper.card("Scheduling Mode");
+        JPanel modeRow  = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 4));
+        modeRow.setOpaque(false);
+
+        sjfPreemptive = new JCheckBox("SJF Preemptive (SRTF)");
+        priPreemptive = new JCheckBox("Priority Preemptive");
+        sjfPreemptive.setFont(UIHelper.F_BODY); sjfPreemptive.setOpaque(false);
+        priPreemptive.setFont(UIHelper.F_BODY); priPreemptive.setOpaque(false);
+
+        modeRow.add(sjfPreemptive);
+        modeRow.add(priPreemptive);
+        modeCard.add(modeRow, BorderLayout.CENTER);
+        root.add(modeCard);
+        root.add(Box.createVerticalStrut(10));
+
         // ── Process table ─────────────────────────────────────────────────
-        JPanel tc = UIHelper.card("Process Input Table  ");
+        JPanel tc = UIHelper.card("Process Input Table");
 
         String[] cols = {"PID", "Arrival Time", "Burst Time", "Priority"};
         inputModel = new DefaultTableModel(cols, 0) {
@@ -31,7 +51,7 @@ public class InputPanel {
         tbl.getColumnModel().getColumn(0).setPreferredWidth(80);
 
         JScrollPane tsp = new JScrollPane(tbl);
-        tsp.setPreferredSize(new Dimension(700, 200));
+        tsp.setPreferredSize(new Dimension(700, 300));
         tsp.setBorder(new LineBorder(UIHelper.BORDER));
 
         errorLabel = UIHelper.lbl(" ", UIHelper.F_SMALL, UIHelper.DANGER);
@@ -68,6 +88,9 @@ public class InputPanel {
     }
 
     // ── Getters ──────────────────────────────────────────────────────────
+    public boolean isSJFPreemptive() { return sjfPreemptive.isSelected(); }
+    public boolean isPriPreemptive() { return priPreemptive.isSelected(); }
+
     public List<Process> collectProcesses() {
         if (inputModel.getRowCount() < 2)
             throw new IllegalArgumentException("Add at least 2 processes.");
@@ -77,9 +100,9 @@ public class InputPanel {
 
         for (int r = 0; r < inputModel.getRowCount(); r++) {
             String pid = cell(r, 0);
-            if (pid.isEmpty())     throw new IllegalArgumentException("Row " + (r+1) + ": PID cannot be empty.");
-            if (pid.length() > 8)  throw new IllegalArgumentException("Row " + (r+1) + ": PID must be ≤ 8 characters.");
-            if (!pids.add(pid))    throw new IllegalArgumentException("Duplicate PID: \"" + pid + "\".");
+            if (pid.isEmpty())    throw new IllegalArgumentException("Row " + (r+1) + ": PID cannot be empty.");
+            if (pid.length() > 8) throw new IllegalArgumentException("Row " + (r+1) + ": PID must be ≤ 8 characters.");
+            if (!pids.add(pid))   throw new IllegalArgumentException("Duplicate PID: \"" + pid + "\".");
 
             int at  = parseCell(r, 1, "Arrival Time", pid, false);
             int bt  = parseCell(r, 2, "Burst Time",   pid, true);
