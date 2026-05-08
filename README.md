@@ -19,15 +19,14 @@ The simulator provides a deep dive into the following metrics:
 2. **Open Project:** Open the project in NetBeans or any Java IDE.
 3. **Run:** Execute the `SJF_vs_Priority.java` file.
 
-
 ### Project Team Members
-Maria Victor
-Youstina Attia
-Yassa Hany
-Yassa Hammam
-Ahmed Ebrahim
-Ahmed Mohammed
-Youssef Ahmed
+- Maria Victor
+- Youstina Attia
+- Yassa Hany
+- Yassa Hammam
+- Ahmed Ebrahim
+- Ahmed Mohammed
+- Youssef Ahmed
 
 ## How to Run
 1. Clone the repository.
