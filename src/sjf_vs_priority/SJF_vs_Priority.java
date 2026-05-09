@@ -6,6 +6,7 @@ package sjf_vs_priority;
 
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import sjf_vs_priority.gui.SchedulerGUI;
 
 public class SJF_vs_Priority {
 
@@ -23,4 +24,3 @@ public class SJF_vs_Priority {
         });
     }
 }
-
